@@ -1,4 +1,5 @@
-<!-- <!DOCTYPE html>
+<!-- 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -22,6 +23,11 @@
       font-size: 18px;
       color: green;
     }
+    #product-info {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+    }
   </style>
 </head>
 <body>
@@ -36,7 +42,8 @@
 
     <section>
       <div id="scanner-container"></div>
-      <div id="barcode-result"></div>
+      <div id="barcode-result">Scan a barcode...</div>
+      <div id="product-info"></div>
       <button onclick="stopScanner()">Stop Scanner</button>
     </section>
   </div>
@@ -49,7 +56,9 @@
           type: "LiveStream",
           target: document.querySelector('#scanner-container'), // Where the video will appear
           constraints: {
-            facingMode: "environment"
+            facingMode: "user", // Use the front camera or any available camera
+            width: { ideal: 1280 }, // Adjust resolution
+            height: { ideal: 720 }
           }
         },
         decoder: {
@@ -57,9 +66,10 @@
         }
       }, function(err) {
         if (err) {
-          console.log(err);
+          console.log("Error initializing Quagga: ", err);
           return;
         }
+        console.log("Quagga initialized successfully.");
         Quagga.start();
       });
 
@@ -67,33 +77,46 @@
       Quagga.onDetected(function(result) {
         const barcode = result.codeResult.code;
         document.getElementById('barcode-result').textContent = `Barcode Detected: ${barcode}`;
-        fetchBarcodeData(barcode);
+        fetchProductData(barcode);  // Fetch product data based on barcode
       });
     }
 
-    // Fetch barcode data (e.g., food info from an API)
-    function fetchBarcodeData(barcode) {
-      // Example API call (you can use a real API like Open Food Facts for barcode details)
-      fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`)
+    // Fetch product data using barcode (using Open Food Facts API)
+    function fetchProductData(barcode) {
+      const url = `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`;
+
+      fetch(url)
         .then(response => response.json())
         .then(data => {
           if (data.product) {
-            // Display product name and calories
-            const productName = data.product.product_name || "Unknown product";
-            const productCalories = data.product.nutriments ? data.product.nutriments.energy_kcal : "No data";
-            document.getElementById('barcode-result').innerHTML = `Product: ${productName} <br> Calories: ${productCalories}`;
+            const product = data.product;
+            const productName = product.product_name || "Unknown product";
+            const productCalories = product.nutriments ? product.nutriments.energy_kcal : "Calories not available";
+            const productDescription = product.ingredients_text || "Ingredients not available";
+
+            // Display product details
+            document.getElementById('product-info').innerHTML = `
+              <strong>Product Name:</strong> ${productName} <br>
+              <strong>Calories:</strong> ${productCalories} kcal <br>
+              <strong>Description:</strong> ${productDescription}
+            `;
           } else {
-            document.getElementById('barcode-result').textContent = "No data found for this barcode.";
+            document.getElementById('product-info').textContent = "Product data not found.";
           }
+        })
+        .catch(error => {
+          console.error('Error fetching product data:', error);
+          document.getElementById('product-info').textContent = "Error fetching product data.";
         });
     }
 
     // Stop the scanner
     function stopScanner() {
       Quagga.stop();
+      console.log("Scanner stopped.");
     }
 
-    // Initialize the scanner when the page is loaded
+    // Initialize the scanner when the page loads
     window.onload = function() {
       startScanner();
     };
@@ -157,7 +180,9 @@
           type: "LiveStream",
           target: document.querySelector('#scanner-container'), // Where the video will appear
           constraints: {
-            facingMode: "environment"
+            facingMode: "environment", // Use the back camera
+            width: { ideal: 1280 }, // Adjust resolution
+            height: { ideal: 720 } // Adjust resolution
           }
         },
         decoder: {
@@ -165,9 +190,10 @@
         }
       }, function(err) {
         if (err) {
-          console.log(err);
+          console.log("Error initializing Quagga: ", err);
           return;
         }
+        console.log("Quagga initialized successfully.");
         Quagga.start();
       });
 
@@ -211,6 +237,7 @@
     // Stop the scanner
     function stopScanner() {
       Quagga.stop();
+      console.log("Scanner stopped.");
     }
 
     // Initialize the scanner when the page loads

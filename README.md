@@ -15,7 +15,7 @@
 2. Member 2 - Maria Binu Simon
 
 ## Hosted Project Link:
-[Link to hosted project](http://yourprojectlink.com)
+[Link to hosted project](https://figpine.github.io/CalorieTracker/)
 
 ## Project Description:
 The Calorie Tracker is a web-based application that helps users track their daily calorie intake by adding meals, either by searching local food items or manually entering meal details. This also allows for a bar code scanning feature. The app provides calorie data and helps users manage their diet efficiently.

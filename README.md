@@ -65,7 +65,7 @@ This application allows users to input food items either manually or through a b
 ![anavadya and me](https://github.com/user-attachments/assets/b802e586-ad26-4b4f-8c90-abac33316b00)
 
 ## Video
-
+[video](https://drive.google.com/file/d/1XWM_-6NkvPeyZBUh5ixQoUJnKmlbY9sI/view?usp=sharing)
 
 ## Team Contribution
 1. **Anavadya**: css, barcode

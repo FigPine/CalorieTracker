@@ -1,0 +1,243 @@
+
+ <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - Calorie Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Calorie Tracker</h1>
+      <nav>
+        <a href="profile.html">Profile</a>
+        <a href="meal_input.html">Input Meal</a>
+      </nav>
+    </header>
+
+    <section>
+      <h2>Welcome Back!</h2>
+      <div id="caloriesToday">Total Calories: 0 kcal</div>
+
+      <div>
+        <h3>Target Calories for Today</h3>
+        <div id="targetCalories">Target: 2000 kcal</div>
+        <div id="caloriesConsumed">Calories Consumed: 0 kcal</div>
+        <div id="remainingCalories">Remaining Calories: 2000 kcal</div>
+      </div>
+
+      <div>
+        <h3>Meals for the Day</h3>
+        <ul id="mealList">
+          // Meals will be listed here 
+        </ul>
+      </div>
+
+      <div>
+        <button onclick="window.location.href='meal_input.html'">
+          Add New Meal
+        </button>
+        <button onclick="clearData()">
+          Clear All Data
+        </button>
+      </div>
+
+      <div>
+        <h3>Meal Statistics</h3>
+        <div id="averageCalories">Average Calories per Meal: 0 kcal</div>
+        <div id="highestCalorieMeal">Highest Calorie Meal: None</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const targetCalories = 2000; // Set the target calories
+    let totalCalories = 0; // Track total calories consumed today
+    let mealHistory = []; // Store meal history for the day
+
+    // Function to load the total calories and meal history from local storage
+    function loadCalories() {
+      const savedCalories = localStorage.getItem("totalCalories");
+      if (savedCalories) {
+        totalCalories = parseInt(savedCalories);
+      }
+      const savedMeals = localStorage.getItem("mealHistory");
+      if (savedMeals) {
+        mealHistory = JSON.parse(savedMeals);
+      }
+    }
+
+    // Function to calculate and display meal statistics
+    function updateStatistics() {
+      const averageCalories = mealHistory.length > 0 
+        ? (totalCalories / mealHistory.length).toFixed(2) 
+        : 0;
+
+      const highestCalorieMeal = mealHistory.reduce((max, meal) => 
+        meal.calories > (max.calories || 0) ? meal : max, {});
+
+      document.getElementById("averageCalories").innerText =
+        `Average Calories per Meal: ${averageCalories} kcal`;
+      document.getElementById("highestCalorieMeal").innerText =
+        `Highest Calorie Meal: ${highestCalorieMeal.mealName || 'None'} (${highestCalorieMeal.calories || 0} kcal)`;
+    }
+
+    // Function to update calories and meals when a new meal is added
+    function updateDisplay() {
+      document.getElementById("caloriesToday").innerText =
+        `Total Calories: ${totalCalories} kcal`;
+      document.getElementById("caloriesConsumed").innerText =
+        `Calories Consumed: ${totalCalories} kcal`;
+      document.getElementById("remainingCalories").innerText =
+        `Remaining Calories: ${targetCalories - totalCalories} kcal`;
+
+      const mealListEl = document.getElementById("mealList");
+      mealListEl.innerHTML = "";
+      mealHistory.forEach(meal => {
+        const mealItem = document.createElement("li");
+        mealItem.textContent = `${meal.mealName} - ${meal.calories} kcal (${meal.mealType})`;
+        mealListEl.appendChild(mealItem);
+      });
+
+      updateStatistics();
+    }
+
+    // Function to clear all data from localStorage and reset display
+    function clearData() {
+      localStorage.clear();
+      totalCalories = 0;
+      mealHistory = [];
+      updateDisplay();
+    }
+
+    // When the page loads, retrieve data from localStorage and update display
+    window.onload = function () {
+      loadCalories();
+      updateDisplay();
+    };
+  </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - Calorie Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Calorie Tracker</h1>
+      <nav>
+        <a href="profile.html">Profile</a>
+        <a href="meal_input.html">Input Meal</a>
+      </nav>
+    </header>
+
+    <section>
+      <h2>Welcome Back!</h2>
+      <div id="caloriesToday">Total Calories: 0 kcal</div>
+
+      <div>
+        <h3>Target Calories for Today</h3>
+        <div id="targetCalories">Target: 2000 kcal</div>
+        <div id="caloriesConsumed">Calories Consumed: 0 kcal</div>
+        <div id="remainingCalories">Remaining Calories: 2000 kcal</div>
+      </div>
+
+      <div>
+        <h3>Meals for the Day</h3>
+        <ul id="mealList">
+          <!-- Meals will be listed here -->
+        </ul>
+      </div>
+
+      <div>
+        <button onclick="window.location.href='meal_input.html'">
+          Add New Meal
+        </button>
+        <button onclick="clearData()">
+          Clear All Data
+        </button>
+      </div>
+
+      <div>
+        <h3>Meal Statistics</h3>
+        <div id="averageCalories">Average Calories per Meal: 0 kcal</div>
+        <div id="highestCalorieMeal">Highest Calorie Meal: None</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const targetCalories = 2000; // Set the target calories
+    let totalCalories = 0; // Track total calories consumed today
+    let mealHistory = []; // Store meal history for the day
+
+    // Function to load the total calories and meal history from local storage
+    function loadCalories() {
+      const savedCalories = localStorage.getItem("totalCalories");
+      if (savedCalories) {
+        totalCalories = parseInt(savedCalories);
+      }
+      const savedMeals = localStorage.getItem("mealHistory");
+      if (savedMeals) {
+        mealHistory = JSON.parse(savedMeals);
+      }
+    }
+
+    // Function to calculate and display meal statistics
+    function updateStatistics() {
+      const averageCalories = mealHistory.length > 0 
+        ? (totalCalories / mealHistory.length).toFixed(2) 
+        : 0;
+
+      const highestCalorieMeal = mealHistory.reduce((max, meal) => 
+        meal.calories > (max.calories || 0) ? meal : max, {});
+
+      document.getElementById("averageCalories").innerText =
+        `Average Calories per Meal: ${averageCalories} kcal`;
+      document.getElementById("highestCalorieMeal").innerText =
+        `Highest Calorie Meal: ${highestCalorieMeal.mealName || 'None'} (${highestCalorieMeal.calories || 0} kcal)`;
+    }
+
+    // Function to update calories and meals when a new meal is added
+    function updateDisplay() {
+      document.getElementById("caloriesToday").innerText =
+        `Total Calories: ${totalCalories} kcal`;
+      document.getElementById("caloriesConsumed").innerText =
+        `Calories Consumed: ${totalCalories} kcal`;
+      document.getElementById("remainingCalories").innerText =
+        `Remaining Calories: ${targetCalories - totalCalories} kcal`;
+
+      const mealListEl = document.getElementById("mealList");
+      mealListEl.innerHTML = "";
+      mealHistory.forEach(meal => {
+        const mealItem = document.createElement("li");
+        mealItem.textContent = `${meal.mealName} - ${meal.calories} kcal`;
+        mealListEl.appendChild(mealItem);
+      });
+
+      updateStatistics();
+    }
+
+    // Function to clear all data from localStorage and reset display
+    function clearData() {
+      localStorage.clear();
+      totalCalories = 0;
+      mealHistory = [];
+      updateDisplay();
+    }
+
+    // When the page loads, retrieve data from localStorage and update display
+    window.onload = function () {
+      loadCalories();
+      updateDisplay();
+    };
+  </script>
+</body>
+</html>

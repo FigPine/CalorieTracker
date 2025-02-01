@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Input Meals</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Calorie Tracker</h1>
+      <nav>
+        <a href="home.html">Home</a>
+        <a href="profile.html">Profile</a>
+      </nav>
+    </header>
+
+    <section>
+      <h2>Input Meal</h2>
+
+      <!-- Search Bar for Food Selection -->
+      <input type="text" id="foodSearch" placeholder="Search for food..." oninput="searchFood()" />
+      <ul id="foodSearchResults"></ul>
+
+      <div id="mealDescription">
+        <!-- Display meal description here -->
+      </div>
+
+      <div>
+        <button onclick="window.location.href='barcode_scan.html'">Scan Barcode</button>
+      </div>
+
+      <div>
+        <h3>Meal Type</h3>
+        <select id="mealType">
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch">Lunch</option>
+          <option value="snacks">Snacks</option>
+          <option value="dinner">Dinner</option>
+        </select>
+        <button onclick="saveMeal()">Save Meal</button>
+      </div>
+
+      <!-- Link to Manual Input Page -->
+      <div style="margin-top: 20px;">
+        <button onclick="window.location.href='manual_input.html'">Manual Meal Entry</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const apiKey = 'CFIHtJfA1dHf94331rRq40p68Wyu9u41wa0eWIbu'; // Your USDA API Key
+
+    // Local food data (local JSON file)
+    const localFoods = [
+      {"name": "Appam", "serving_size": "1 serving", "calories": 120},
+      {"name": "Idli", "serving_size": "1 serving", "calories": 58},
+      {"name": "Dosa", "serving_size": "1 serving", "calories": 133},
+      {"name": "Puttu", "serving_size": "1 serving", "calories": 180},
+      {"name": "Kadala", "serving_size": "1 serving", "calories": 150},
+      {"name": "Uppumav", "serving_size": "1 serving", "calories": 180},
+      {"name": "Peas Curry", "serving_size": "1 serving", "calories": 120},
+      {"name": "Idiyappam", "serving_size": "1 serving", "calories": 90},
+      {"name": "Egg Curry", "serving_size": "1 serving", "calories": 155},
+      {"name": "Oothappam", "serving_size": "1 serving", "calories": 150},
+      {"name": "Puri", "serving_size": "1 serving", "calories": 101},
+      {"name": "Masala Dosa", "serving_size": "1 serving", "calories": 250},
+      {"name": "Aviyil", "serving_size": "1 serving", "calories": 140},
+      {"name": "Elisheri", "serving_size": "1 serving", "calories": 130},
+      {"name": "Moru", "serving_size": "1 serving", "calories": 60},
+      {"name": "Pulisheri", "serving_size": "1 serving", "calories": 80},
+      {"name": "Sambhar", "serving_size": "1 serving", "calories": 90},
+      {"name": "Pappadam", "serving_size": "1 serving", "calories": 40},
+      {"name": "Pineapple Curry", "serving_size": "1 serving", "calories": 110},
+      {"name": "Rasam", "serving_size": "1 serving", "calories": 35},
+      {"name": "Thoran", "serving_size": "1 serving", "calories": 100},
+      {"name": "Beans Upperi", "serving_size": "1 serving", "calories": 90},
+      {"name": "Pachadi", "serving_size": "1 serving", "calories": 80},
+      {"name": "Mango Achar", "serving_size": "1 serving", "calories": 50},
+      {"name": "Lemon Achar", "serving_size": "1 serving", "calories": 45}
+    ];
+
+    // Global variables
+    let totalCalories = 0;
+    let mealHistory = [];
+
+    // Load existing calorie and meal history data from localStorage
+    function loadCalories() {
+      const savedCalories = localStorage.getItem("totalCalories");
+      if (savedCalories) {
+        totalCalories = parseInt(savedCalories);
+      }
+      const savedMeals = localStorage.getItem("mealHistory");
+      if (savedMeals) {
+        mealHistory = JSON.parse(savedMeals);
+      }
+    }
+
+    // Update calories in localStorage
+    function updateCalories(calories) {
+      totalCalories += calories;
+      localStorage.setItem("totalCalories", totalCalories);
+    }
+
+    // Search for food (API + Local JSON)
+    function searchFood() {
+      const searchQuery = document.getElementById("foodSearch").value.toLowerCase();
+      console.log(searchQuery);
+      if (searchQuery.length > 2) {
+        // API Search
+        fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?query=${searchQuery}&api_key=${apiKey}`)
+          .then(response => response.json())
+          .then(data => {
+            const searchResults = data.foods.map(food => {
+              return {
+                name: food.description,
+                calories: food.foodNutrients.find(nutrient => nutrient.nutrientName === "Energy")?.value || 0
+              };
+            });
+            displayFoodResults(searchResults);
+          });
+      } else {
+        displayFoodResults(localFoods);
+      }
+    }
+
+    // Display search results
+    function displayFoodResults(results) {
+      const foodSearchResults = document.getElementById("foodSearchResults");
+      foodSearchResults.innerHTML = "";
+      results.forEach(food => {
+        const li = document.createElement("li");
+        li.textContent = `${food.name} - ${food.calories} kcal`;
+        li.onclick = () => selectFood(food);
+        foodSearchResults.appendChild(li);
+      });
+    }
+
+    // Select food item and display it in the description
+    function selectFood(food) {
+      const mealType = document.getElementById("mealType").value;
+      const mealData = {
+        mealName: food.name,
+        calories: food.calories,
+        mealType: mealType
+      };
+
+      mealHistory.push(mealData);
+      updateCalories(food.calories);
+
+      // Save the updated meal history
+      localStorage.setItem("mealHistory", JSON.stringify(mealHistory));
+      
+      // Redirect to home page
+      window.location.href = 'home.html';
+    }
+
+    window.onload = function () {
+      loadCalories();
+    };
+  </script>
+</body>
+</html>

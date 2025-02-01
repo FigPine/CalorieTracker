@@ -1,0 +1,54 @@
+<!-- manual_input.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Meal Entry</title>
+    <link rel="stylesheet" href="styless.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calorie Tracker</h1>
+            <nav>
+                <a href="home.html">Home</a>
+                <a href="profile.html">Profile</a>
+            </nav>
+        </header>
+
+        <section>
+            <h2>Enter Meal Details</h2>
+            <form id="mealForm">
+                <label for="foodName">Food Name:</label>
+                <input type="text" id="foodName" required>
+                
+                <label for="calories">Calories:</label>
+                <input type="number" id="calories" required>
+                
+                <label for="mealType">Meal Type:</label>
+                <select id="mealType" required>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="snacks">Snacks</option>
+                    <option value="dinner">Dinner</option>
+                </select>
+
+                <button type="button" onclick="saveMeal()">Save Meal</button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        function saveMeal() {
+            const foodName = document.getElementById('foodName').value;
+            const calories = document.getElementById('calories').value;
+            const mealType = document.getElementById('mealType').value;
+
+            // Save the meal details
+            alert(`Saved meal: ${foodName}, ${calories} kcal for ${mealType}`);
+            // You can save the data to backend or local storage
+        }
+    </script>
+</body>
+</html>

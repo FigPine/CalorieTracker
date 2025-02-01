@@ -1,0 +1,30 @@
+{
+    "foods": [
+      {"name": "Appam", "serving_size": "1 serving", "calories": 120},
+      {"name": "Idli", "serving_size": "1 serving", "calories": 58},
+      {"name": "Dosa", "serving_size": "1 serving", "calories": 133},
+      {"name": "Puttu", "serving_size": "1 serving", "calories": 180},
+      {"name": "Kadala", "serving_size": "1 serving", "calories": 150},
+      {"name": "Uppumav", "serving_size": "1 serving", "calories": 180},
+      {"name": "Peas Curry", "serving_size": "1 serving", "calories": 120},
+      {"name": "Idiyappam", "serving_size": "1 serving", "calories": 90},
+      {"name": "Egg Curry", "serving_size": "1 serving", "calories": 155},
+      {"name": "Oothappam", "serving_size": "1 serving", "calories": 150},
+      {"name": "Puri", "serving_size": "1 serving", "calories": 101},
+      {"name": "Masala Dosa", "serving_size": "1 serving", "calories": 250},
+      {"name": "Aviyil", "serving_size": "1 serving", "calories": 140},
+      {"name": "Elisheri", "serving_size": "1 serving", "calories": 130},
+      {"name": "Moru", "serving_size": "1 serving", "calories": 60},
+      {"name": "Pulisheri", "serving_size": "1 serving", "calories": 80},
+      {"name": "Sambhar", "serving_size": "1 serving", "calories": 90},
+      {"name": "Pappadam", "serving_size": "1 serving", "calories": 40},
+      {"name": "Pineapple Curry", "serving_size": "1 serving", "calories": 110},
+      {"name": "Rasam", "serving_size": "1 serving", "calories": 35},
+      {"name": "Thoran", "serving_size": "1 serving", "calories": 100},
+      {"name": "Beans Upperi", "serving_size": "1 serving", "calories": 90},
+      {"name": "Pachadi", "serving_size": "1 serving", "calories": 80},
+      {"name": "Mango Achar", "serving_size": "1 serving", "calories": 50},
+      {"name": "Lemon Achar", "serving_size": "1 serving", "calories": 45}
+    ]
+  }
+  

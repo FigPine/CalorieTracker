@@ -61,9 +61,6 @@ This application allows users to input food items either manually or through a b
 3. **Manual entry of meals**
 ![Screenshot 2025-02-01 175032](https://github.com/user-attachments/assets/8eaaf30c-c6bb-4d91-b4a3-8e9101e82430)
 
-## Build Photos
-![anavadya and me](https://github.com/user-attachments/assets/b802e586-ad26-4b4f-8c90-abac33316b00)
-
 ## Video
 [video](https://drive.google.com/file/d/1XWM_-6NkvPeyZBUh5ixQoUJnKmlbY9sI/view?usp=sharing)
 
